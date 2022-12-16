@@ -1,25 +1,5 @@
 #include "ECS.h"
 
-System UpdatePosition;
-UpdatePosition.MASK = Position::ID | Physic::ID;
-UpdatePosition.DO = [&](Entity e){
-	Position po = e.GET<Position>();
-	Physic py = e.GET<Physic>();
-	po.x += py.vx;
-	po.y += py.vy;
-	py.vx += py.a;
-	py.vy += py.a;
-	e.SET<Position>(po);
-	e.SET<Physic>(py);
-}
-
-System Display;
-Display.MASK = Position::ID;
-Display.DO = [&](Entity e){
-	Position po = e.GET<Position>();
-	std::cout<<"Position of entity: "<<po.x<<";"<<po.y<<std::endl;
-}
-
 int main () {
 	View V;
 	V.SYSTEMS.push_back(UpdatePosition);

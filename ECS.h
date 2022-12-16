@@ -1,3 +1,5 @@
+#ifndef ECS_H
+#define ECS_H
 #include <iostream>
 #include <map>
 #include <vector>
@@ -42,7 +44,25 @@ struct Entity{
 
 struct System {
 	uint32_t MASK;
-	std::function<void(Entity)> DO;
+	std::function<void(Entity & e)> DO;
+};
+
+System UpdatePosition {Position::ID|Physic::ID, [](Entity & e){
+		Position po = e.GET<Position>();
+		Physic py = e.GET<Physic>();
+		po.x += py.vx;
+		po.y += py.vy;
+		py.vx += py.a;
+		py.vy += py.a;
+		e.SET<Position>(po);
+		e.SET<Physic>(py);
+	}
+};
+
+System Display {Position::ID, [](Entity & e){
+		Position po = e.GET<Position>();
+		std::cout<<"Position of entity: "<<po.x<<";"<<po.y<<std::endl;
+	}
 };
 
 struct View{
@@ -55,6 +75,5 @@ struct View{
 		}
 	}
 };
-
-
+#endif
 
