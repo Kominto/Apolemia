@@ -5,6 +5,7 @@
 #include <vector>
 #include <any>
 #include <functional>
+#include <SDL2/SDL.h>
 
 uint32_t TID = 0;
 uint32_t GETID () { return ++TID; }
@@ -16,7 +17,12 @@ struct Position{
 
 struct Physic{
 	inline static uint32_t ID = GETID();
-	int vx, vy, a;
+	float vx, vy, a;
+};
+
+struct Sprite{
+	inline static uint32_t ID = GETID();
+	SDL_Renderer * r;
 };
 
 struct Entity{
@@ -45,24 +51,6 @@ struct Entity{
 struct System {
 	uint32_t MASK;
 	std::function<void(Entity & e)> DO;
-};
-
-System UpdatePosition {Position::ID|Physic::ID, [](Entity & e){
-		Position po = e.GET<Position>();
-		Physic py = e.GET<Physic>();
-		po.x += py.vx;
-		po.y += py.vy;
-		py.vx += py.a;
-		py.vy += py.a;
-		e.SET<Position>(po);
-		e.SET<Physic>(py);
-	}
-};
-
-System Display {Position::ID, [](Entity & e){
-		Position po = e.GET<Position>();
-		std::cout<<"Position of entity: "<<po.x<<";"<<po.y<<std::endl;
-	}
 };
 
 struct View{

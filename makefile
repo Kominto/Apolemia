@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-Wall -Werror -Wextra -pedantic -g -std=c++2a
-LDFLAGS= -lSDL2 -lSDL2main
+LDFLAGS= -lSDL2main -lSDL2
 
 BIN=App
 CSRC=$(wildcard *.cpp)
@@ -8,7 +8,7 @@ COBJ=$(CSRC:%.cpp=%.o)
 
 all: $(BIN)
 
-$(BIN): $(COBJ) ; $(CC) $(LDFLAGS) -o $@ $^
+$(BIN): $(COBJ) ; $(CC) -o $@ $^ $(LDFLAGS)
 
 .cpp.o: ; $(CC) $(CFLAGS) -c $< -o $@
 
