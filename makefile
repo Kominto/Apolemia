@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-Wall -Werror -Wextra -pedantic -g -std=c++2a
-LDFLAGS= -lSDL2main -lSDL2
+LDFLAGS= -lSDL2main -lSDL2 -lSDL2_image
 
 BIN=App
 CSRC=$(wildcard *.cpp)
