@@ -1,5 +1,5 @@
 # Apolemia
-A small game framework coded entirely in C++
+A small C++ game framework using SDL2 and an homemade ECS
 
 **/!\ Very early in development, not functional yet**
 
